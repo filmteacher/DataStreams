@@ -108,8 +108,10 @@ public class SearchFrame extends JFrame
 
                 originalArea.setText("");
 
-                try (Stream<String> lines = Files.lines(file)) {
-                    lines.forEach(l -> originalArea.append(l + "\n"));
+                try (Stream<String> lines = Files.lines(file))
+                {
+                    lines
+                        .forEach(l -> originalArea.append(l + "\n"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -155,10 +157,11 @@ public class SearchFrame extends JFrame
 
             resultsArea.setText("");
 
-            try {
-                Files.lines(file)
-                        .filter(line -> line.contains(searchString))
-                        .forEach(line -> resultsArea.append(line + "\n\n"));
+            try (Stream<String> lines = Files.lines(file))
+            {
+                lines
+                        .filter(l -> l.contains(searchString))
+                        .forEach(l -> resultsArea.append(l + "\n\n"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
