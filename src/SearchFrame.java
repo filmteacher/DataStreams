@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
@@ -39,7 +40,8 @@ public class SearchFrame extends JFrame
     JScrollPane resultsScroller;
 
     File selectedFile;
-    String rec = "";
+
+    int marginSize = 25;
 
     public SearchFrame()
     {
@@ -65,7 +67,7 @@ public class SearchFrame extends JFrame
     private void createMainPnl()
     {
         mainPnl = new JPanel();
-        mainPnl.setLayout(new FlowLayout());
+        mainPnl.setLayout(new FlowLayout(FlowLayout.CENTER, 0, marginSize));
         mainPnl.setBackground(Color.LIGHT_GRAY);
     }
 
@@ -83,9 +85,8 @@ public class SearchFrame extends JFrame
         controlsPnl = new JPanel();
         controlsPnl.setLayout(new GridLayout(1,2));
         controlsPnl.setBackground(Color.WHITE);
-        controlsPnl.setBorder(new TitledBorder(new EtchedBorder(),"CONTROLS"));
 
-        controlsPnl.setPreferredSize(new Dimension(680,80));
+        controlsPnl.setPreferredSize(new Dimension(680,60));
 
         buttonsPnl = new JPanel();
         buttonsPnl.setLayout(new GridLayout(1,2));
@@ -104,6 +105,8 @@ public class SearchFrame extends JFrame
             if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                 this.selectedFile = chooser.getSelectedFile();
                 Path file = selectedFile.toPath();
+
+                originalArea.setText("");
 
                 try (Stream<String> lines = Files.lines(file)) {
                     lines.forEach(l -> originalArea.append(l + "\n"));
@@ -129,9 +132,7 @@ public class SearchFrame extends JFrame
         searchPnl.setBackground(Color.WHITE);
         searchPnl.setBorder(new TitledBorder(new EtchedBorder(),"2. ENTER phrase and click SEARCH:"));
 
-
         searchFld = new JTextField();
-
 
         searchBtn = new JButton("Search");
         searchBtn.addActionListener((ActionEvent ae) ->
@@ -151,6 +152,8 @@ public class SearchFrame extends JFrame
             }
 
             Path file = selectedFile.toPath();
+
+            resultsArea.setText("");
 
             try {
                 Files.lines(file)
@@ -172,7 +175,6 @@ public class SearchFrame extends JFrame
         textPnl = new JPanel();
         textPnl.setLayout(new GridLayout(1,2));
         textPnl.setBackground(Color.WHITE);
-        textPnl.setBorder(new TitledBorder("RESULTS"));
 
         originalArea = new JTextArea(25,25);
         originalArea.setFont(new Font("Verdana", Font.PLAIN, 14));
