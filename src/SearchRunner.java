@@ -1,4 +1,9 @@
-package PACKAGE_NAME;
+import javax.swing.*;
 
-public class SearchRunner {
+public class SearchRunner
+{
+    public static void main(String[] args)
+    {
+        JFrame frame = new SearchFrame();
+    }
 }
